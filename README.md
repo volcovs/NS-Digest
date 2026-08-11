@@ -136,11 +136,6 @@ functions. Set these environment variables in the Netlify dashboard:
   (`https://<site>/.netlify/functions/cleanup-news`), deleting files older than
   90 days.
 
-> **Note:** Articles are stored at `/articles/<date>.jsonl` in the app's Dropbox
-> root. `DROPBOX_ROOT` is intentionally left empty; because GitHub Actions
-> rejects empty secret values, set that secret to a single space — the readers
-> trim it back to empty and everything resolves to `/articles`.
-
 ---
 
 ## Project layout
