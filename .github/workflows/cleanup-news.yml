@@ -1,0 +1,19 @@
+name: Cleanup Old NS-Digest Papers
+
+on:
+  schedule:
+    # First day of every month at 03:00 UTC
+    - cron: "0 3 1 * *"
+
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger cleanup
+        run: |
+          curl --fail-with-body \
+            -X POST \
+            "${{ secrets.NETLIFY_CLEANUP_URL }}"

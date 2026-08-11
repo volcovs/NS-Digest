@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NS-Digest</title>
+
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="/favicon.svg"
+    >
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div>
+                <h1>NS-Digest</h1>
+                <p>Neuroscience literature, collected automatically.</p>
+            </div>
+
+            <button id="refresh-button">
+                Refresh
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="controls">
+            <div>
+                <label for="category-filter">
+                    Category
+                </label>
+
+                <select id="category-filter">
+                    <option value="all">All</option>
+                    <option value="neural_signals">
+                        Neural signals
+                    </option>
+                    <option value="machine_learning">
+                        Machine learning
+                    </option>
+                    <option value="bci">
+                        Brain-computer interfaces
+                    </option>
+                    <option value="clinical">
+                        Clinical
+                    </option>
+                    <option value="security_privacy">
+                        Security &amp; privacy
+                    </option>
+                    <option value="other">
+                        Other
+                    </option>
+                </select>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-heading">
+                <h2>Latest papers</h2>
+                <span id="article-count"></span>
+            </div>
+
+            <div id="loading" class="status">
+                Loading papers...
+            </div>
+
+            <div
+                id="error"
+                class="status error hidden"
+            ></div>
+
+            <div
+                id="articles"
+                class="articles"
+            ></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>
+            NS-Digest · Automated neuroscience literature aggregation
+        </p>
+    </footer>
+
+    <script src="/app.js"></script>
+</body>
+</html>
