@@ -122,7 +122,7 @@ functions. Set these environment variables in the Netlify dashboard:
 | Variable | Purpose |
 | --- | --- |
 | `DROPBOX_APP_KEY` / `DROPBOX_APP_SECRET` / `DROPBOX_REFRESH_TOKEN` | Dropbox access |
-| `DROPBOX_ROOT` | Folder prefix, e.g. `/ns-digest` (must match the fetcher) |
+| `DROPBOX_ROOT` | Leave empty. GitHub rejects empty secrets, so enter a single space — the readers trim it back to empty |
 | `RESEND_API_KEY` | Resend API key for the digest email |
 | `DIGEST_RECIPIENT` | Where to send the weekly digest |
 | `DIGEST_FROM` | Verified Resend sender (defaults to `onboarding@resend.dev`) |
@@ -136,8 +136,10 @@ functions. Set these environment variables in the Netlify dashboard:
   (`https://<site>/.netlify/functions/cleanup-news`), deleting files older than
   90 days.
 
-> **Note:** `DROPBOX_ROOT` must be identical for the Python fetcher (writer) and
-> the Netlify functions (readers), or the site will read from an empty folder.
+> **Note:** Articles are stored at `/articles/<date>.jsonl` in the app's Dropbox
+> root. `DROPBOX_ROOT` is intentionally left empty; because GitHub Actions
+> rejects empty secret values, set that secret to a single space — the readers
+> trim it back to empty and everything resolves to `/articles`.
 
 ---
 

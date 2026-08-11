@@ -6,39 +6,8 @@ const dbx = new Dropbox({
     refreshToken: process.env.DROPBOX_REFRESH_TOKEN,
 });
 
+const ARTICLES_PATH = "/articles";
 const RETENTION_DAYS = 90;
-
-
-function normalizePath(path) {
-    path = path.replaceAll("\\", "/").trim();
-
-    if (!path) {
-        throw new Error("Dropbox path cannot be empty");
-    }
-
-    if (!path.startsWith("/")) {
-        path = "/" + path;
-    }
-
-    while (path.includes("//")) {
-        path = path.replaceAll("//", "/");
-    }
-
-    if (path.length > 1) {
-        path = path.replace(/\/+$/, "");
-    }
-
-    return path;
-}
-
-
-function articlesPath() {
-    const root = process.env.DROPBOX_ROOT?.trim() || "";
-
-    return root
-        ? normalizePath(`${normalizePath(root)}/articles`)
-        : "/articles";
-}
 
 
 function jsonResponse(body, status = 200) {
@@ -99,7 +68,7 @@ async function listArticleFiles() {
 
     let response =
         await dbx.filesListFolder({
-            path: articlesPath(),
+            path: ARTICLES_PATH,
         });
 
     entries.push(

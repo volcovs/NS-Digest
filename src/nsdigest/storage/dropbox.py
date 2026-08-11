@@ -38,40 +38,39 @@ class DropboxStorage:
         self.root = settings.dropbox_root.strip("/")
 
     def _path(self, path: str) -> str:
-        # Apply the optional DROPBOX_ROOT prefix, then normalize. This keeps
-        # the Python writer and the Netlify reader (news.mjs) pointed at the
-        # same folder for any value of DROPBOX_ROOT.
         path = path.lstrip("/")
 
         if self.root:
-            path = f"/{self.root}/{path}"
-        else:
-            path = f"/{path}"
+            return f"/{self.root}/{path}"
 
-        return _normalize_path(path)
+        return f"/{path}"
 
     def write_text(self, path: str, content: str) -> None:
+        path = _normalize_path(path)
+
         self.client.files_upload(
             content.encode("utf-8"),
-            self._path(path),
+            path,
             mode=dropbox.files.WriteMode.overwrite,
         )
 
     def read_text(self, path: str) -> str:
+        path = _normalize_path(path)
+
         _, response = self.client.files_download(
-            self._path(path)
+            path
         )
 
         return response.content.decode("utf-8")
 
     def delete(self, path: str) -> None:
         self.client.files_delete_v2(
-            self._path(path)
+            _normalize_path(path)
         )
 
     def exists(self, path: str) -> bool:
         try:
-            self.client.files_get_metadata(self._path(path))
+            self.client.files_get_metadata(_normalize_path(path))
             return True
         except dropbox.exceptions.ApiError:
             return False
